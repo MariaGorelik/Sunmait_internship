@@ -1,11 +1,14 @@
-import numpy
+import numpy as np
 
 
 def main():
-    print("Hello from lecture1!")
-    a = [1, 2, 3]
-    d = {1: "a", 2: "b", 3: "c"}
-    c = 5
+    arr1 = np.array([1, 2, 3])
+
+    arr2 = np.array([4, 5, 6])
+
+    result = arr1 @ arr2.T
+
+    print(result)
 
 
 if __name__ == "__main__":
