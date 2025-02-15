@@ -1,26 +1,29 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from transformers import T5Tokenizer, T5ForConditionalGeneration
 
 app = FastAPI()
 
-# Модель данных для предсказания
-class PredictRequest(BaseModel):
-    feature1: float
-    feature2: float
+tokenizer = T5Tokenizer.from_pretrained("t5-small")
+model = T5ForConditionalGeneration.from_pretrained("t5-small")
 
-# Эндпоинт для проверки доступности сервиса
+class PredictRequest(BaseModel):
+    text: str
+
 @app.get("/ping")
 async def ping():
-    return {"message": "pong"}
+    return {"message": "server is working"}
 
-# Эндпоинт для предсказания
 @app.post("/predict")
 async def predict(request: PredictRequest):
-    # Простая модель предсказания: сумма feature1 и feature2
-    prediction = request.feature1 + request.feature2
-    return {"prediction": prediction}
+    try:
+        input_ids = tokenizer(request.text, return_tensors="pt").input_ids
+        outputs = model.generate(input_ids)
+        translated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        return {"translated_text": translated_text}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-# Запуск приложения
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=800)
