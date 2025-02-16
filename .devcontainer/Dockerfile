@@ -1,14 +1,13 @@
-# .devcontainer/Dockerfile
-FROM python:3.9-slim
+FROM python:3.12.2-slim
 
-# Set the working directory
-WORKDIR /workspace
+WORKDIR /app
 
-# Copy the FastAPI application code
-COPY . .
+COPY . /app
 
-# Expose the port the app runs on
-EXPOSE 8000
+RUN pip install virtualenv
 
-# Command to run the application
-CMD ["uvicorn", "hello:app", "--host", "0.0.0.0", "--port", "8000"]
+RUN python -m virtualenv venv
+
+RUN . venv/bin/activate && pip install -r requirements.txt
+
+CMD ["venv/bin/python", "hello.py"]

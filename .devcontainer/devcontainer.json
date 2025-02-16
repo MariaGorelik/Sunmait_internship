@@ -1,18 +1,20 @@
 {
-	"name": "Python 3",
-	"image": "mcr.microsoft.com/devcontainers/python:1-3.12-bookworm",
-	"features": {
-	  "ghcr.io/jsburckhardt/devcontainer-features/ruff:1": {},
-	  "ghcr.io/jsburckhardt/devcontainer-features/uv:1": {},
-	  "ghcr.io/hspaans/devcontainer-features/pytest:1": {}
-	},
-	"customizations": {
-	  "vscode": {
-		"extensions": [
-		  "Codium.codium"
-		]
-	  }
-	},
-	"forwardPorts": [8000], // Forward port 8000 for FastAPI
-	"remoteUser": "vscode" // Use the vscode user for better permissions handling
+	"name": "My Python Dev Container",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "my-python-app",
+  "workspaceFolder": "/app",
+  "features": {
+    "ghcr.io/jsburckhardt/devcontainer-features/ruff:1": {},
+    "ghcr.io/jsburckhardt/devcontainer-features/uv:1": {},
+    "ghcr.io/hspaans/devcontainer-features/pytest:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Codium.codium"
+      ]
+    }
+  },
+  "forwardPorts": [8000],
+  "remoteUser": "vscode"
   }
