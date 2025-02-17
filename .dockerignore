@@ -1,5 +1,5 @@
 # .dockerignore
-venv/
+.venv/
 __pycache__/
 *.pyc
 *.pyo
