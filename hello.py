@@ -1,12 +1,17 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from transformers import T5Tokenizer, T5ForConditionalGeneration
+#from transformers import T5Tokenizer, T5ForConditionalGeneration
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import uvicorn
 
 app = FastAPI()
 
-tokenizer = T5Tokenizer.from_pretrained("t5-small")
-model = T5ForConditionalGeneration.from_pretrained("t5-small")
+#tokenizer = T5Tokenizer.from_pretrained("t5-small")
+#model = T5ForConditionalGeneration.from_pretrained("t5-small")
+
+tokenizer = AutoTokenizer.from_pretrained("Helsinki-NLP/opus-mt-zh-en")
+
+model = AutoModelForSeq2SeqLM.from_pretrained("Helsinki-NLP/opus-mt-zh-en")
 
 
 class PredictRequest(BaseModel):

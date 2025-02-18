@@ -2,9 +2,15 @@ FROM python:3.12.2-slim
 
 WORKDIR /app
 
-COPY requirements.txt /app
+RUN pip install fastapi
 
-RUN pip install -r requirements.txt
+RUN pip install pydantic
+
+RUN pip install transformers
+
+RUN pip install uvicorn
+
+RUN pip install httpx
 
 COPY . /app
 
