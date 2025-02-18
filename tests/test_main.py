@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
-from hello import app  # Импортируем FastAPI приложение
+import httpx
+from hello import app 
 
 client = TestClient(app)
 
