@@ -2,19 +2,9 @@ FROM python:3.12.2-slim
 
 WORKDIR /app
 
-RUN pip install torch
+COPY requirements.txt /app
 
-RUN pip install fastapi
-
-RUN pip install pydantic
-
-RUN pip install transformers
-
-RUN pip install uvicorn
-
-RUN pip install httpx
-
-RUN pip install sentencepiece
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
 

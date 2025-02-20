@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   my-python-app:
     build:
@@ -9,3 +8,11 @@ services:
       - "8000:8000"
     environment:
       - PYTHONUNBUFFERED=1
+    volumes:
+      - .:/app
+      - python-packages:/usr/local/lib/python3.12/site-packages
+      - ~/.cache/pre-commit:/root/.cache/pre-commit
+      - ~/.cache/pip:/root/.cache/pip
+
+volumes:
+  python-packages:

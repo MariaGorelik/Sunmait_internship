@@ -1,5 +1,4 @@
 from fastapi.testclient import TestClient
-import httpx
 from hello import app 
 
 client = TestClient(app)
