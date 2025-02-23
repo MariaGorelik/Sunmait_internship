@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
-CMD ["python", "hello.py"]
+CMD ["tail", "-f", "/dev/null"]

@@ -13,3 +13,5 @@ wheels/
 CACHED
 CANCELED
 .vscode/
+
+.qodo/
