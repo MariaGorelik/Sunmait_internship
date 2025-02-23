@@ -1,6 +1,6 @@
 # FastAPI DevContainer Project
 
-This project is a FastAPI-based web application running inside a DevContainer using Docker and Docker Compose. The API provides an endpoint for text processing using the `T5-small` model from the `transformers` library.
+This project is a FastAPI-based web application running inside a DevContainer using Docker and Docker Compose. The API provides an endpoint for text processing using the `Helsinki-NLP` model from the `transformers` library.
 
 ## 📂 Project Structure
 ```
@@ -8,7 +8,6 @@ This project is a FastAPI-based web application running inside a DevContainer us
 ├── .devcontainer/
 │   ├── devcontainer.json
 │   ├── Dockerfile
-├── .venv/  # (if used, should be ignored in .dockerignore)
 ├── hello.py
 ├── docker-compose.yml
 ├── requirements.txt
