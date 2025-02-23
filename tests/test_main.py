@@ -10,7 +10,7 @@ def test_ping():
     assert response.json() == {"message": "server is working"}
 
 def test_predict():
-    """Проверяем, что /predict работает"""
-    response = client.post("/predict", json={"text": "Hello world"})
+    """Проверяем, что /translate работает"""
+    response = client.post("/translate", json={"text": "Hello world"})
     assert response.status_code == 200
     assert "translated_text" in response.json()

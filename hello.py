@@ -13,12 +13,14 @@ class PredictRequest(BaseModel):
     text: str
 
 
+# Health check endpoint to verify server status
 @app.get("/ping")
 async def ping():
     return {"message": "server is working"}
 
 
-@app.post("/predict")
+# Endpoint to perform text translation (From English to German)
+@app.post("/translate")
 async def predict(request: PredictRequest):
     try:
         input_ids = tokenizer(request.text, return_tensors="pt").input_ids
