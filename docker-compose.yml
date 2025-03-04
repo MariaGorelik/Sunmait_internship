@@ -1,12 +1,18 @@
-# docker-compose.yml
 version: '3.8'
-
 services:
-  web:
+  my-python-app:
     build:
       context: .
       dockerfile: .devcontainer/Dockerfile
     ports:
       - "8000:8000"
     environment:
-      - OPENWEATHER_API_KEY=3981d24f49b14ae702f3fd85fad6f46e
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - .:/app
+      - python-packages:/usr/local/lib/python3.12/site-packages
+      - ~/.cache/pre-commit:/root/.cache/pre-commit
+      - ~/.cache/pip:/root/.cache/pip
+
+volumes:
+  python-packages:

@@ -8,5 +8,14 @@ dependencies = [
     "fastapi>=0.115.8",
     "httpx>=0.28.1",
     "numpy>=2.2.2",
+    "sentencepiece>=0.2.0",
+    "torch>=2.6.0",
+    "transformers>=4.49.0",
     "uvicorn>=0.34.0",
+]
+
+[dependency-groups]
+dev = [
+    "coverage>=7.6.12",
+    "pre-commit>=4.1.0",
 ]

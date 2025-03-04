@@ -1,36 +1,35 @@
 from fastapi import FastAPI, HTTPException
-import httpx
-import os
+from pydantic import BaseModel
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+import uvicorn
 
 app = FastAPI()
 
-# You need to sign up at OpenWeatherMap to get an API key
-API_KEY = "3981d24f49b14ae702f3fd85fad6f46e"
-BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
+tokenizer = AutoTokenizer.from_pretrained("Helsinki-NLP/opus-mt-zh-en")
+model = AutoModelForSeq2SeqLM.from_pretrained("Helsinki-NLP/opus-mt-zh-en")
 
-@app.get("/weather/{city}")
-async def get_weather(city: str):
-    params = {
-        "q": city,
-        "appid": API_KEY,
-        "units": "metric"  # Use "imperial" for Fahrenheit
-    }
-    
-    async with httpx.AsyncClient() as client:
-        response = await client.get(BASE_URL, params=params)
-        
-        if response.status_code != 200:
-            raise HTTPException(status_code=response.status_code, detail="Error fetching weather data")
-        
-        data = response.json()
-        weather = {
-            "city": data["name"],
-            "temperature": data["main"]["temp"],
-            "description": data["weather"][0]["description"],
-            "humidity": data["main"]["humidity"],
-            "wind_speed": data["wind"]["speed"]
-        }
-        
-        return weather
 
-# To run the app, use the command: uvicorn weather-fastapi-app:app --reload
+class PredictRequest(BaseModel):
+    text: str
+
+
+# Health check endpoint to verify server status
+@app.get("/ping")
+async def ping():
+    return {"message": "server is working"}
+
+
+# Endpoint to perform text translation (From English to German)
+@app.post("/translate")
+async def predict(request: PredictRequest):
+    try:
+        input_ids = tokenizer(request.text, return_tensors="pt").input_ids
+        outputs = model.generate(input_ids)
+        translated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        return {"translated_text": translated_text}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
